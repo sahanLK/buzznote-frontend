@@ -26,10 +26,9 @@ export default function Home() {
       </div>
 
       <div className="bg-[#f8fafb] mx-auto">
-        <div className="max-w-[1200px] mx-auto h-screen my-10">
+        <div className="max-w-[1200px] mx-auto h-screen py-10">
           Somthing
         </div>
-
       </div>
     </>
   );

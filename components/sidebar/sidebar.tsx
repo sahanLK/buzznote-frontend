@@ -16,11 +16,11 @@ export default function Sidebar() {
             </button>
 
             <div className="pl-2">
-                <SidebarItem Icon={ImHome} text="Home" />
-                <SidebarItem Icon={MdOutlineCampaign} text="Campaigns" />
-                <SidebarItem Icon={BiSolidGroup} text="Audience" />
-                <SidebarItem Icon={FaWpforms} text="Forms" />
-                <SidebarItem Icon={IoAnalytics} text="Analytics" />
+                <SidebarItem Icon={ImHome} text="Home" url="/" />
+                <SidebarItem Icon={MdOutlineCampaign} text="Campaigns" url="/campaigns" />
+                <SidebarItem Icon={BiSolidGroup} text="Audience" url="/audience" />
+                <SidebarItem Icon={FaWpforms} text="Forms" url="/forms" />
+                <SidebarItem Icon={IoAnalytics} text="Analytics" url="/analytics" />
             </div>
 
             <div className="mt-auto fixed bottom-0 mb-20 w-full">

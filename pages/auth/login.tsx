@@ -4,13 +4,15 @@ import FormInputField from "@/components/form/FormTextField";
 import Link from "next/link";
 import { FormEvent, ReactElement, useState } from "react";
 import SignedOutLayout from "./SignedOutLayout";
-import type {NextPageWithLayout} from "../_app";
+import type { NextPageWithLayout } from "../_app";
+import { useRouter } from "next/router";
 
 const LoginPage: NextPageWithLayout = () => {
+    const router = useRouter();
+
     const [formData, setFormData] = useState({
-        username: "",
+        email: "",
         password: "",
-        keepLoggedIn: false
     });
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -21,14 +23,22 @@ const LoginPage: NextPageWithLayout = () => {
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        console.log("Submitting");
-        console.log(formData);
-    }
 
-    function toggleCheckbox() {
-        setFormData(prev => (
-            { ...prev, "keepLoggedIn": !formData.keepLoggedIn }
-        ));
+        fetch('http://localhost:8081/api/auth/login', {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData)
+        }).then(res => {
+            if (res.status == 200) {
+                console.log("Login Successful");
+                router.push('/');
+            } else {
+                console.log(res.json() + "\nLogin Failed");
+            }
+        });
     }
 
     return (
@@ -38,9 +48,9 @@ const LoginPage: NextPageWithLayout = () => {
                 <p className="mb-15 text-center">Need a Buzznote Account? <Link href="/auth/register" className="underline pl-2">Create an Account</Link></p>
 
                 <form onSubmit={handleSubmit}>
-                    <FormInputField name="username" value={formData.username} title="Username or Email" onInputChange={handleChange} />
+                    <FormInputField name="email" value={formData.email} title="Username or Email" onInputChange={handleChange} />
                     <FormInputField name="password" value={formData.password} title="Password" onInputChange={handleChange} />
-                    <FormCheckboxField name="status" title="Keep me Logged In" checked={formData.keepLoggedIn} onInputChange={toggleCheckbox} />
+                    {/* <FormCheckboxField name="status" title="Keep me Logged In" checked={formData.keepLoggedIn} onInputChange={toggleCheckbox} /> */}
                     <FormSubmitButton text="Login" />
                 </form>
             </div>

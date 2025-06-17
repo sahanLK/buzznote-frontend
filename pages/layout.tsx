@@ -1,4 +1,4 @@
-import Header from "@/components/header/header";
+import Header from "@/components/header/Header";
 import Sidebar from "@/components/sidebar/sidebar";
 import { ReactNode } from "react";
 
@@ -7,7 +7,7 @@ type PropType = {
 }
 
 export default function RootLayout({ children }: PropType) {
-    return <>
+    return (
         <div className="w-full">
             <Header />
 
@@ -20,5 +20,5 @@ export default function RootLayout({ children }: PropType) {
                 </div>
             </div>
         </div>
-    </>
+    )
 }

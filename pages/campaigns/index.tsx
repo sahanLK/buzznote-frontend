@@ -1,6 +1,12 @@
+import TabContent from "@/components/tabpanel/TabContent";
+import TabControlItem from "@/components/tabpanel/TabControlItem";
+import TabControls from "@/components/tabpanel/TabControls";
+import Tabpanel from "@/components/tabpanel/TabPanel";
+import TabContentItem from "@/components/tabpanel/TabContentItem";
 import Link from "next/link";
 import { IoList } from "react-icons/io5";
 import { LuCalendar } from "react-icons/lu";
+
 
 export default function CampaignsPage() {
     return (
@@ -14,21 +20,17 @@ export default function CampaignsPage() {
                     </div>
                 </div>
             </div>
+            <Tabpanel>
+                <TabControls>
+                    <TabControlItem tab={1} Icon={IoList} text="List" />
+                    <TabControlItem tab={2} Icon={LuCalendar} text="Calendar" />
+                </TabControls>
 
-            <div className="title py-3 border-b-1 border-stone-200">
-                <div className="container mx-auto flex items-center">
-                    <ul className="flex gap-8 text-stone-600">
-                        <li className="flex items-center"><IoList className="pr-2" size={25} />List</li>
-                        <li className="flex items-center"><LuCalendar className="pr-2" size={25} />Calendar</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div className="bg-[#f8fafb] mx-auto">
-                <div className="max-w-[1200px] mx-auto h-screen py-10">
-                    Somthing
-                </div>
-            </div>
+                <TabContent>
+                    <TabContentItem tabId={1}>Campaign List</TabContentItem>
+                    <TabContentItem tabId={2}>Calendar</TabContentItem>
+                </TabContent>
+            </Tabpanel>
         </>
     )
 }

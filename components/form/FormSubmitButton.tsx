@@ -4,9 +4,11 @@ type PropTypes = {
     onClick?: () => void;
 }
 
-export default function FormSubmitButton({ text, onClick }: PropTypes) {
+export default function FormSubmitButton({ text }: PropTypes) {
 
     return (
-        <button type="submit" className="block text-white bg-green-600 px-5 py-2 rounded text-sm my-5">{text}</button>
+        <button type="submit" className="block text-white bg-[#017e89] px-5 py-2 rounded my-5 w-full mt-10 cursor-pointer">
+            {text}
+        </button>
     )
 }

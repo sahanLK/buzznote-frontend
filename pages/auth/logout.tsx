@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react"
+import { useRouter } from "next/router";
+import { useEffect, useRef, useState } from "react"
 
 export default function Logout() {
     const [loading, setLoading] = useState(false);
+    const hasLoggedOut = useRef(false);
+    const router = useRouter();
 
     useEffect(() => {
         setLoading(true);
+        if (hasLoggedOut.current) return;
+        hasLoggedOut.current = true;
 
         fetch("http://localhost:8081/api/auth/logout", {
             method: "GET",
@@ -12,6 +17,7 @@ export default function Logout() {
         }).then(res => {
             if (res.status == 200) {
                 console.log("Logout Successful");
+                router.replace("/auth/login");
             } else {
                 console.error("Logout Failed");
             }

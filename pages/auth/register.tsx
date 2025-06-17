@@ -3,7 +3,7 @@ import FormSubmitButton from "@/components/form/FormSubmitButton";
 import FormInputField from "@/components/form/FormTextField";
 import Link from "next/link";
 import { FormEvent, ReactElement, useState } from "react";
-import SignedOutLayout from "./SignedOutLayout";
+import SignedOutLayout from "../../components/layouts/SignedOutLayout";
 import type {NextPageWithLayout} from "../_app";
 
 const RegisterPage: NextPageWithLayout = () => {

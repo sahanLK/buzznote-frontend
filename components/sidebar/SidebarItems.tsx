@@ -1,13 +1,13 @@
 import Link from "next/link"
 import { ReactNode } from "react"
 
-type PropType = {
+type PropTypes = {
     Icon: React.ElementType,
     text: string,
     url: string
 }
 
-export default function SidebarItem({Icon, text, url}: PropType) {
+export default function SidebarItem({Icon, text, url}: PropTypes) {
     return (
         <li className="flex items-center py-1">
             <Icon />

@@ -21,8 +21,6 @@ export default function CreateCampaign() {
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        console.log("FormData: ", formData);
-
         fetch("http://localhost:8083/api/campaign/create", {
             method: "POST",
             credentials: "include",
@@ -34,7 +32,6 @@ export default function CreateCampaign() {
             if (res.status == 201) {
                 console.log("Campaign created successfully!!");
             }
-            console.log(res.json());
         });
     }
 

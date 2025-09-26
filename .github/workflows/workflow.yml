@@ -1,0 +1,151 @@
+name: Deploy BuzzNote Frontend
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment"
+        required: true
+        default: "DEV"
+        type: choice
+        options:
+          - DEV
+          - PROD
+
+  push:
+    branches:
+      - development
+      - main
+
+env:
+  TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN_APP_TERRAFORM_IO }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Tests
+        run: echo "Running Tests"
+
+#   build:
+#     runs-on: ubuntu-latest
+#     needs: test
+#     steps:
+#       - name: Login to GHCR
+#         uses: docker/login-action@v3
+#         with:
+#           registry: ghcr.io
+#           username: ${{ github.actor }}
+#           password: ${{ secrets.GHCR_TOKEN }}
+
+#       - name: Set up QEMU
+#         uses: docker/setup-qemu-action@v3
+
+#       - name: Set up Docker Buildx
+#         uses: docker/setup-buildx-action@v3
+
+#       - name: Checkout
+#         uses: actions/checkout@v4
+
+#       - name: Build and Push Docker image
+#         run: |
+#           IMAGE=ghcr.io/sahanlk/tplus-front
+#           SHA=${{ github.sha }}
+
+#           docker build -t $IMAGE:$SHA .
+#           docker tag $IMAGE:$SHA $IMAGE:latest
+
+#           docker push $IMAGE:$SHA
+#           docker push $IMAGE:latest
+
+#   deploy:
+#     runs-on: ubuntu-latest
+#     needs: build
+#     steps:
+#       - name: Checkout to Config Repo
+#         uses: actions/checkout@v5
+#         with:
+#           repository: sahanlk/config-tplus
+#           token: ${{ secrets.GHCR_TOKEN }}
+#           path: config-tplus
+
+#       - name: Setup Terraform
+#         uses: hashicorp/setup-terraform@v3
+#         with:
+#           terraform_version: 1.11.4
+# #
+#       - name: Terraform Init
+#         run: terraform init
+#         working-directory: config-tplus/terraform
+
+#       - name: Terraform Plan
+#         run: terraform plan
+#         working-directory: config-tplus/terraform
+
+#       - name: Terraform Apply
+#         run: terraform apply --auto-approve
+#         working-directory: config-tplus/terraform
+
+#       - name: Capture Server IP
+#         run: |
+#           echo "SERVER_IP=$(terraform output -raw test-server-ip)" >> $GITHUB_ENV
+#         working-directory: config-tplus/terraform
+
+#       - name: Update Cloudflare DNS
+#         run: |
+#           curl -X PUT "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/dns_records/$CLOUDFLARE_DNS_RECORD_ID" \
+#             -H "Content-Type: application/json" \
+#             -H "Authorization: Bearer $CLOUDFLARE_API_KEY" \
+#             --data "{
+#               \"name\": \"tutorplus.online\",
+#               \"ttl\": 3600,
+#               \"type\": \"A\",
+#               \"comment\": \"Domain verification record\",
+#               \"content\": \"$SERVER_IP\",
+#               \"proxied\": true
+#             }"
+#         env:
+#           CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+#           CLOUDFLARE_DNS_RECORD_ID: ${{ secrets.CLOUDFLARE_DNS_RECORD_ID }}
+#           CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }}
+
+#       - name: Set up Ansible path
+#         run: |
+#           if [[ "${{ github.ref_name }}" == "development" ]]; then
+#             ANSIBLE_PATH="$GITHUB_WORKSPACE/config-tplus/dev/ansible"
+#           elif [[ "${{ github.ref_name }}" == "main" ]]; then
+#             ANSIBLE_PATH="$GITHUB_WORKSPACE/config-tplus/prod/ansible"
+#           else
+#             ANSIBLE_PATH="$GITHUB_WORKSPACE/config-tplus/test/ansible"
+#           fi
+
+#           echo "ANSIBLE_PATH=$ANSIBLE_PATH" >> $GITHUB_ENV
+#           echo "USING ANSIBLE_PATH: $ANSIBLE_PATH"
+#         shell: bash
+
+#       - name: Generate the Private Key file from Terraform Outputs
+#         run: |
+#           pwd
+#           echo $ENVIRONMENT/private-key.pem
+#           terraform output -raw private_key_pem > $ANSIBLE_PATH/private-key.pem
+#           chmod 600 $ANSIBLE_PATH/private-key.pem
+#         working-directory: config-tplus/terraform
+
+#       - name: Generate Ansible Vault password file
+#         run: echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}" > vault_pass.txt
+#         working-directory: ${{ env.ANSIBLE_PATH }}
+
+#       - name: Deploy with Ansible
+#         uses: dawidd6/action-ansible-playbook@v4
+#         with:
+#           directory: ${{ env.ANSIBLE_PATH }}
+#           playbook: playbook.yaml
+#           options: |
+#             --inventory inventory.yaml
+#             --vault-password-file vault_pass.txt
+#             --private-key private-key.pem"
+
+#       - name: Delete Ansible Vault password file
+#         run: rm vault_pass.txt
+#         working-directory: ${{ env.ANSIBLE_PATH }}

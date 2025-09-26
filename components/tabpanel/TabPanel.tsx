@@ -47,7 +47,6 @@ export default function Tabpanel({ children }: PropTypes) {
                     children: tabChildren
                 });
             }
-
         }
         return child;
 

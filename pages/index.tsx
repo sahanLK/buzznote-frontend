@@ -27,7 +27,7 @@ export default function Home() {
 
       <div className="bg-[#f8fafb] mx-auto">
         <div className="max-w-[1200px] mx-auto h-screen py-10">
-          Somthing
+          Something
         </div>
       </div>
     </>

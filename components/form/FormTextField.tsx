@@ -5,7 +5,7 @@ type PropTypes = {
     type?: "text" | "email" | "password",
     placeholder?: string,
     onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    value: string
+    value: string,
 }
 
 export default function FormInputField({ name, title, type = 'text', placeholder = '', value, onInputChange }: PropTypes) {

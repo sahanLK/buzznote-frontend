@@ -1,7 +1,7 @@
 import React from "react";
 
 type PropTypes = {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     tabId: number,
 } & React.HTMLAttributes<HTMLDivElement>;
 

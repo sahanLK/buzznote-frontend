@@ -6,6 +6,7 @@ import { BiSolidGroup } from "react-icons/bi";
 import { IoAnalytics } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
 import Link from "next/link";
+import SidebarSubItem from "./SidebarSubItem";
 
 
 export default function Sidebar() {
@@ -17,8 +18,12 @@ export default function Sidebar() {
 
             <div className="pl-2">
                 <SidebarItem Icon={ImHome} text="Home" url="/" />
-                <SidebarItem Icon={MdOutlineCampaign} text="Campaigns" url="/campaigns" />
-                <SidebarItem Icon={BiSolidGroup} text="Audience" url="/audience" />
+                <SidebarItem Icon={MdOutlineCampaign} text="Campaigns" url="/campaigns">
+                    <SidebarSubItem text="Campaign list" url="/audience/segments" />
+                </SidebarItem>
+                <SidebarItem Icon={BiSolidGroup} text="Audience" url="/audience">
+                    <SidebarSubItem text="Segments" url="/audience/segments" />
+                </SidebarItem>
                 <SidebarItem Icon={FaWpforms} text="Forms" url="/forms" />
                 <SidebarItem Icon={IoAnalytics} text="Analytics" url="/analytics" />
             </div>
